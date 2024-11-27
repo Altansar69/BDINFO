@@ -123,11 +123,13 @@ def extract_video_info(content):
             codec = "AVC"
         if codec == "MPEG-H HEVC Video":
             codec = "HEVC"
+        if codec == "MPEG-2 Video":
+            codec = "MPEG-2"
         bitrate = parts[1].strip()
         resolution = parts[2].strip()
         fps = parts[3].strip()
         aspect_ratio = parts[4].strip()
-        profile = parts[5].strip()
+        profile = parts[5].strip() if len(parts) > 5 else ""
 
         hdr = parts[7].strip() if len(parts) > 7 else ""
             
@@ -546,6 +548,7 @@ def main(input_iso):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Please drag and drop an ISO file onto this script or use contextmenu.")
+        # main('test.iso')
     else:
         input_iso_path = sys.argv[1]
         main(input_iso_path)
