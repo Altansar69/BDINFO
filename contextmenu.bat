@@ -1,6 +1,7 @@
 @echo off
 color 02
-for /f "tokens=3" %%a in ('reg query HKEY_CLASSES_ROOT\.iso /ve') do set ProgID=%%a
+for /f "tokens=4" %%a in ('reg query HKEY_CLASSES_ROOT\.iso /ve') do set ProgID=%%a
+echo %ProgID%
 echo BBBBB   DDDD    N   N   FFFFF  OOO
 echo B    B  D   D   NN  N   F      O   O
 echo BBBBB   D   D   N N N   FFFF   O   O
