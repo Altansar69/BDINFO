@@ -261,7 +261,7 @@ def parse_bdinfo_output(file_path):
 def format_output(disc_info, video_info, audio_tracks, subtitles):
     """Format the extracted information along specified formatting."""
     # Construct the VIDEO section
-    video_section = "ÃÄÄÄ VIDEO ÄÄÄÂÄ " + "\nÛÛ ³             ÃÄ ".join(video_info)
+    video_section = "ÃÄÄÄ VIDEO ÄÄÄÂÄ " + "\nÛÛ  ³             ÃÄ ".join(video_info)
     
     # Diviser le texte par lignes
     linesVid = video_section.splitlines()
@@ -274,7 +274,7 @@ def format_output(disc_info, video_info, audio_tracks, subtitles):
             while len(lineVid) < 78:
                 lineVid += ' '
         else:
-            while len(lineVid) < 75:
+            while len(lineVid) < 74:
                 lineVid += ' '
         lineVid += 'ÛÛ'  # Ajoutez les caractères Û aux positions 79 et 80
         linesVid_with_suffix.append(lineVid)
@@ -291,7 +291,7 @@ def format_output(disc_info, video_info, audio_tracks, subtitles):
     video_section = "\n".join(linesVid_with_suffix)
 
     # Construct the AUDIO section
-    audio_section = "ÃÄÄÄ AUDIO ÄÄÄÂÄ " + "\nÛÛ ³             ÃÄ ".join(audio_tracks)
+    audio_section = "ÃÄÄÄ AUDIO ÄÄÄÂÄ " + "\nÛÛ  ³             ÃÄ ".join(audio_tracks)
     
     # Diviser le texte par lignes
     linesAud = audio_section.splitlines()
@@ -304,7 +304,7 @@ def format_output(disc_info, video_info, audio_tracks, subtitles):
             while len(lineAud) < 78:
                 lineAud += ' '
         else:
-            while len(lineAud) < 75:
+            while len(lineAud) < 74:
                 lineAud += ' '
         lineAud += 'ÛÛ'  # Ajoutez les caractères Û aux positions 79 et 80
         linesAud_with_suffix.append(lineAud)
@@ -321,7 +321,7 @@ def format_output(disc_info, video_info, audio_tracks, subtitles):
     audio_section = "\n".join(linesAud_with_suffix)
 
     # Construct the SUBTITLES section
-    subtitle_section = "ÀÄÄÄ SUBS ÄÄÄÄÂÄ " + "\nÛÛ               ÃÄ ".join(subtitles)
+    subtitle_section = "ÀÄÄÄ SUBS ÄÄÄÄÂÄ " + "\nÛÛ                ÃÄ ".join(subtitles)
 
     linesSub = subtitle_section.splitlines()
 
@@ -333,7 +333,7 @@ def format_output(disc_info, video_info, audio_tracks, subtitles):
             while len(lineSub) < 78:
                 lineSub += ' '
         else:
-            while len(lineSub) < 75:
+            while len(lineSub) < 74:
                 lineSub += ' '
         lineSub += 'ÛÛ'  # Ajoutez les caractères Û aux positions 79 et 80
         linesSub_with_suffix.append(lineSub)
@@ -357,15 +357,15 @@ def format_output(disc_info, video_info, audio_tracks, subtitles):
         "ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ\n"
         "ÛÛ                                                                            ÛÛ\n"
         "ÛÛ                                                                            ÛÛ\n"
-        "ÛÛ ÚÄÄÄ DISC ÄÄÄÄÂÄ {protection:<57} ÛÛ\n"
-        "ÛÛ ³             ÃÄ {length} @ {bitrate:<43}  ÛÛ\n"
-        "ÛÛ ³             ÀÄ {size:<57} ÛÛ\n"
-        "ÛÛ ³                                                                          ÛÛ\n"
-        "ÛÛ {video_section}\n"
-        "ÛÛ ³                                                                          ÛÛ\n"
-        "ÛÛ {audio_section}\n"
-        "ÛÛ ³                                                                          ÛÛ\n"
-        "ÛÛ {subtitle_section}\n"
+        "ÛÛ  ÚÄÄÄ DISC ÄÄÄÄÂÄ {protection:<56} ÛÛ\n"
+        "ÛÛ  ³             ÃÄ {length} @ {bitrate:<42}  ÛÛ\n"
+        "ÛÛ  ³             ÀÄ {size:<56} ÛÛ\n"
+        "ÛÛ  ³                                                                         ÛÛ\n"
+        "ÛÛ  {video_section}\n"
+        "ÛÛ  ³                                                                         ÛÛ\n"
+        "ÛÛ  {audio_section}\n"
+        "ÛÛ  ³                                                                         ÛÛ\n"
+        "ÛÛ  {subtitle_section}\n"
         "ÛÛ                                                                            ÛÛ\n"
         "ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ"
     ).format(
@@ -380,12 +380,16 @@ def format_output(disc_info, video_info, audio_tracks, subtitles):
     
     return output
 
-def read_greetz_from_ini(file_path):
-    if not os.path.exists(file_path):
-        raise FileNotFoundError("The 'greetz.ini' file cannot be found.")
+def read_greetz_from_ini():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    ini_path = os.path.join(script_dir, 'greetz.ini')
+
+    if not os.path.exists(ini_path):
+        raise FileNotFoundError("The 'greetz.ini' file cannot be found next to the executable.")
+    
     """Lire les 'greetz' à partir d'un fichier .ini."""
     config = configparser.ConfigParser()
-    config.read(file_path)
+    config.read(ini_path)
     return config.get('DEFAULT', 'Greetz', fallback='DefaultGreetz')
 
 def get_user_info():
@@ -393,7 +397,13 @@ def get_user_info():
     release_date = input("Release Date (e.g., 25/11/2024): ")
     if not release_date:
         release_date = datetime.today().strftime("%d/%m/%Y")
-    bluray_region = input("Bluray Region (e.g., Z2): ")
+    bluray_region = input("Bluray Region (e.g., A, B, C): ")
+    if not bluray_region:
+        print("Don't forget bluray region (if you write nothing it's region free)")
+        bluray_region = input("Bluray Region (e.g., A, B, C): ")
+        if not bluray_region:
+            bluray_region = "Region Free"
+    edition = input("Edition (e.g., NL): ")
     french_audio = input("French Audio (e.g., VFi): ")
     imdb_id = input("IMDb ID (e.g., tt5052448): ")
     tmdb_id = input("TMDb ID (e.g., 419430): ")
@@ -402,6 +412,7 @@ def get_user_info():
     user_info = {
         'release_date': release_date,
         'bluray_region': bluray_region,
+        'edition': edition,
         'french_audio': french_audio,
         'imdb_id': imdb_id,
         'tmdb_id': tmdb_id,
@@ -439,7 +450,8 @@ def format_user_info(user_info, file_name, greetz):
     imdb_id = user_info.get("imdb_id", "")
     tmdb_id = user_info.get("tmdb_id", "")
     note_text = user_info.get("note", "")
-    
+    edition = user_info.get("edition","")
+
     # Créer une liste de lignes pour la note
     note_lines = []
     while note_text:
@@ -464,8 +476,8 @@ def format_user_info(user_info, file_name, greetz):
         "ÛÛ                                                                            ÛÛ\n"
         f"{'ÛÛ  Release Date .... ' + release_date + ' ' * (56 - len(release_date)) + 'ÛÛ' if release_date else ''}\n"
         f"{'ÛÛ  BluRay Region ... ' + bluray_region + ' ' * (56 - len(bluray_region)) + 'ÛÛ' if bluray_region else ''}\n"
+        f"{'ÛÛ  Edition ......... ' + edition + ' ' * (56 - len(edition)) + 'ÛÛ' if edition else ''}\n"
         f"{'ÛÛ  French Audio .... ' + french_audio + ' ' * (56 - len(french_audio)) + 'ÛÛ' if french_audio else ''}\n"
-        "ÛÛ                                                                            ÛÛ\n"
         f"{'ÛÛ  IMDb ............ ' + imdb_id + ' ' * (56 - len(imdb_id)) + 'ÛÛ' if imdb_id else ''}\n"
         f"{'ÛÛ  TMDb ............ ' + tmdb_id + ' ' * (56 - len(tmdb_id)) + 'ÛÛ' if tmdb_id else ''}\n"
         f"ÛÛ  Greetz .......... {greetz:<54}  ÛÛ\n"
@@ -491,8 +503,7 @@ def main(input_iso):
     
     try:
         # Lire les greetz depuis un .ini
-        greetz = read_greetz_from_ini('greetz.ini')
-
+        greetz = read_greetz_from_ini()
         # Exécuter la commande bdinfo
         print(f"Run the BDINFO command for {input_iso}...")
         result = subprocess.run(
@@ -548,7 +559,7 @@ def main(input_iso):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Please drag and drop an ISO file onto this script or use contextmenu.")
-        # main('test.iso')
+        main('test.iso')
     else:
         input_iso_path = sys.argv[1]
         main(input_iso_path)
